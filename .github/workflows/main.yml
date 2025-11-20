@@ -1,0 +1,29 @@
+name: "自动任务"
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - ".github/workflows/**"
+      - "package.json"
+      - "**.js"
+
+jobs:
+  auto_login_netlib:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "获取仓库代码"
+        uses: actions/checkout@v4
+      - name: "设置Node.js环境"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: "安装依赖项"
+        run: npm install
+      - name: "安装Playwright, browser"
+        run: npx playwright install --with-deps chromium
+      - name: "运行脚本"
+        run: npm start
