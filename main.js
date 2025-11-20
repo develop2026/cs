@@ -70,6 +70,30 @@ async function loginWithAccount() {
         } else {
             console.log("协议按钮未选中");
         }
+
+        console.log("点击验证码登录按钮");
+        const smsLoginSelectors = [
+            'button:has-text("验证码登录")',
+            'button:has-text("短信登录")'
+        ];
+
+        for (const selector of smsLoginSelectors) {
+            try {
+                const isSmsButtonExists = await page.waitForSelector(selector, {
+                    timeout: 2000,
+                    state: 'visible'
+                }).then(() => true).catch(() => false);
+                if (isSmsButtonExists) {
+                    await page.click(selector);
+                    await page.waitForTimeout(2000);
+                    console.log("成功点击验证码登录按钮");
+                    break;
+                }
+            } catch (e) {
+                continue;
+            }
+        }
+
         result = await page.content();
         console.log(result);
     } catch (e) {} finally {
