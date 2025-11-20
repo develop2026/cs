@@ -35,7 +35,7 @@ async function loginWithAccount() {
     try {
         page = await browser.newPage();
         page.setDefaultTimeout(30000);
-        await page.goto("https://wappass.baidu.com/passport/login?u=https://fanyi.baidu.com/m/profile#/sms_login_new", { waitUntil: "networkidle" });
+        await page.goto('https://wappass.baidu.com/passport/login?u=https://fanyi.baidu.com/m/profile#/sms_login_new', { waitUntil: 'networkidle' });
         await page.waitForTimeout(5000);
         console.log("输入手机号");
         await page.fill('input[type="tel"][input-type="all"]', "18177053882");
