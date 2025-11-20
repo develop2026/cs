@@ -35,26 +35,18 @@ async function loginWithAccount() {
     try {
         page = await browser.newPage();
         page.setDefaultTimeout(30000);
-        await page.goto('https://wappass.baidu.com/passport/login?u=https://fanyi.baidu.com/m/profile#/sms_login_new', { waitUntil: 'networkidle' });
-        await page.waitForTimeout(5000);
-        console.log("输入手机号");
-        await page.fill('input[type="tel"][input-type="all"]', "18177053882");
-        await page.waitForTimeout(1000);
-        console.log("勾选协议");
-        await page.click('button[role="checkbox"]');
-        await page.waitForTimeout(1000);
-        console.log("提交...");
-        await page.click('button[disabled="disabled"]');
-    } catch (e) {
-        console.error("操作过程中发生错误:", e);
-        result = await page?.content() || "页面未加载";
-    } finally {
+        await page.goto("https://wappass.baidu.com/passport/login?u=https://fanyi.baidu.com/m/profile#/sms_login_new", {
+            waitUntil: "networkidle"
+        });
+        await page.waitForTimeout(3000);
+        result = await page.content();
+        console.log(result);
+    } catch (e) {} finally {
         if (page) await page.close();
         await browser.close();
     }
     return result;
 }
-
 
 async function main() {
     const result = await loginWithAccount();
