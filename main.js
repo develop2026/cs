@@ -40,6 +40,7 @@ async function loginWithAccount() {
         });
         await page.waitForTimeout(3000);
         result = await page.content();
+        console.log(result)
     } catch (e) {} finally {
         if (page) await page.close();
         await browser.close();
@@ -49,7 +50,7 @@ async function loginWithAccount() {
 
 async function main() {
     const result = await loginWithAccount();
-    await sendTelegram(result);
+    await sendTelegram(result.length);
 }
 
 main().catch(console.error);
