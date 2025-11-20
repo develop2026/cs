@@ -5,6 +5,7 @@ const {
 
 const token = "8496844359:AAHnmQhDqj641wSTI19NOPm0Mdn5fTZYR3U";
 const chatId = "5625039569";
+const browser;
 
 async function sendTelegram(message) {
     if (!token || !chatId) return;
@@ -27,10 +28,6 @@ async function sendTelegram(message) {
 
 // 百度翻译
 async function s1() {
-    const browser = await chromium.launch({
-        headless: true,
-        args: ["--no-sandbox", "--disable-setuid-sandbox"]
-    });
     let page;
     let result = "百度翻译: fail";
     try {
@@ -96,17 +93,12 @@ async function s1() {
         }
     } catch (e) {} finally {
         if (page) await page.close();
-        await browser.close();
     }
     return result;
 }
 
 // 新百易教师
 async function s2() {
-    const browser = await chromium.launch({
-        headless: true,
-        args: ["--no-sandbox", "--disable-setuid-sandbox"]
-    });
     let page;
     let result = "新百易教师: fail";
     try {
@@ -126,9 +118,14 @@ async function s2() {
 }
 
 async function main() {
+    browser = await chromium.launch({
+        headless: true,
+        args: ["--no-sandbox", "--disable-setuid-sandbox"]
+    });
     const result = await s1();
     const result2 = await s2();
     await sendTelegram(`${result}\n${result2}`);
+    await browser.close();
 }
 
 main().catch(console.error);
