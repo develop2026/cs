@@ -46,11 +46,11 @@ async function loginWithAccount() {
             state: 'visible'
         }).then(() => true).catch(() => false);
         if (!isInputExists) {
-            result.message = "未找到手机号输入框";
-            result.inputStatus = "not_found";
-            return result;
+            console.log("未找到手机号输入框");
         }
         await page.fill(inputSelector, "18177053882");
+        const beforeValue = await page.$eval(inputSelector, input => input.value);
+        console.log("输入前输入框的值:", beforeValue);
         result = await page.content();
         console.log(result);
     } catch (e) {} finally {
