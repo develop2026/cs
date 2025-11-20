@@ -55,11 +55,11 @@ async function loginWithAccount() {
         
         console.log("点击");
         const buttonSelector = 'button[role="checkbox"]';
-        const isInputExists = await page.waitForSelector(buttonSelector, { 
+        const isButtonExists = await page.waitForSelector(buttonSelector, { 
             timeout: 5000,
             state: 'visible'
         }).then(() => true).catch(() => false);
-        if (!isInputExists) {
+        if (!isButtonExists) {
             console.log("未找到协议");
         }        
         
