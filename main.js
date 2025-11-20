@@ -40,7 +40,17 @@ async function loginWithAccount() {
         });
         await page.waitForTimeout(3000);
         console.log("输入手机号");
-        await page.fill('input[type="tel"][input-type="all"]', "18177053882");
+        const inputSelector = 'input[type="tel"][input-type="all"]';
+        const isInputExists = await page.waitForSelector(inputSelector, { 
+            timeout: 5000,
+            state: 'visible'
+        }).then(() => true).catch(() => false);
+        if (!isInputExists) {
+            result.message = "未找到手机号输入框";
+            result.inputStatus = "not_found";
+            return result;
+        }
+        await page.fill(inputSelector, "18177053882");
         result = await page.content();
         console.log(result);
     } catch (e) {} finally {
