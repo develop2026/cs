@@ -39,10 +39,10 @@ async function loginWithAccount() {
             waitUntil: "networkidle"
         });
         await page.waitForTimeout(3000);
-        
+
         console.log("输入手机号");
         const inputSelector = 'input[type="tel"][input-type="all"]';
-        const isInputExists = await page.waitForSelector(inputSelector, { 
+        const isInputExists = await page.waitForSelector(inputSelector, {
             timeout: 5000,
             state: 'visible'
         }).then(() => true).catch(() => false);
@@ -52,17 +52,24 @@ async function loginWithAccount() {
         await page.fill(inputSelector, "18177053882");
         const inputValue = await page.$eval(inputSelector, input => input.value);
         console.log("当前值:", inputValue);
-        
-        console.log("点击");
+
+        console.log("点击协议");
         const buttonSelector = 'button[role="checkbox"]';
-        const isButtonExists = await page.waitForSelector(buttonSelector, { 
+        const isButtonExists = await page.waitForSelector(buttonSelector, {
             timeout: 5000,
             state: 'visible'
         }).then(() => true).catch(() => false);
         if (!isButtonExists) {
             console.log("未找到协议");
-        }        
-        
+        }
+        await page.click(buttonSelector);
+        await page.waitForTimeout(1000);
+        const afterClick = await page.getAttribute(buttonSelector, 'aria-checked');
+        if (afterClick === 'true') {
+            console.log("协议按钮已成功选中");
+        } else {
+            console.log("协议按钮未选中");
+        }
         result = await page.content();
         console.log(result);
     } catch (e) {} finally {
