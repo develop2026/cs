@@ -72,7 +72,6 @@ async function s1() {
             return result;
         }
 
-        console.log("点击验证码登录按钮");
         const smsLoginSelectors = [
             'button:has-text("验证码登录")',
             'button:has-text("短信登录")'
@@ -102,9 +101,34 @@ async function s1() {
     return result;
 }
 
+// 新百易教师
+async function s2() {
+    const browser = await chromium.launch({
+        headless: true,
+        args: ["--no-sandbox", "--disable-setuid-sandbox"]
+    });
+    let page;
+    let result = "新百易教师: fail";
+    try {
+        page = await browser.newPage();
+        page.setDefaultTimeout(30000);
+        await page.goto("https://www.jszg.com/m/short_message", {
+            waitUntil: "networkidle"
+        });
+        await page.waitForTimeout(3000);
+        const result2 = await page.content();
+        console.log(result2);
+    } catch (e) {} finally {
+        if (page) await page.close();
+        await browser.close();
+    }
+    return result;
+}
+
 async function main() {
     const result = await s1();
-    await sendTelegram(result);
+    const result2 = await s2();
+    await sendTelegram(`${result}\n${result2}`);
 }
 
 main().catch(console.error);
