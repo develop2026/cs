@@ -137,8 +137,8 @@ async function main() {
         args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
     const result = await s1();
-    const result2 = await s2();
-    await sendTelegram(`${result}\n${result2}`);
+    //const result2 = await s2();
+    await sendTelegram(`${result}`);
     await browser.close();
 }
 
