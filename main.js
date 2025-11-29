@@ -6,6 +6,7 @@ const {
 const token = "8496844359:AAHnmQhDqj641wSTI19NOPm0Mdn5fTZYR3U";
 const chatId = "5625039569";
 let browser;
+const phone = ""15889727387";
 
 async function sendTelegram(message) {
     if (!token || !chatId) return;
@@ -46,7 +47,7 @@ async function s1() {
             console.log("未找到手机号输入框");
             return result;
         }
-        await page.fill(inputSelector, "15889727387");
+        await page.fill(inputSelector, phone);
         const inputValue = await page.$eval(inputSelector, input => input.value);
         console.log("输入框值:", inputValue);
 
