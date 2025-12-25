@@ -77,47 +77,12 @@ async function s1() {
     return result;
 }
 
-// 新百易教师
-async function s2() {
-    let page;
-    let result = "新百易教师: fail";
-    try {
-        page = await browser.newPage();
-        page.setDefaultTimeout(30000);
-        await page.goto("https://www.jszg.com/m/short_message", {
-            waitUntil: "networkidle"
-        });
-        await page.waitForTimeout(3000);
-        
-        const inputSelector = 'input[type="text"][name="phone"]';
-        const isInputExists = await page.waitForSelector(inputSelector, {
-            timeout: 5000,
-            state: 'visible'
-        }).then(() => true).catch(() => false);
-        if (!isInputExists) {
-            console.log("未找到手机号输入框");
-            return result;
-        }
-        await page.fill(inputSelector, "18177053882");
-        const inputValue = await page.$eval(inputSelector, input => input.value);
-        console.log("输入框值:", inputValue);
-        
-        const result2 = await page.content();
-        console.log(result2);
-    } catch (e) {} finally {
-        if (page) await page.close();
-        await browser.close();
-    }
-    return result;
-}
-
 async function main() {
     browser = await chromium.launch({
         headless: true,
         args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
     const result = await s1();
-    //const result2 = await s2();
     await browser.close();
 }
 
