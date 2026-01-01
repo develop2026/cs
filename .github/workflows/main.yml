@@ -24,7 +24,16 @@ jobs:
           node-version: "20"
       - name: "安装依赖项"
         run: npm install
+      - name: "检查Playwright, browser"
+        id: cache-playwright
+        uses: actions/cache@v4
+        with:
+          path: ./cache/playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('./cache/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
       - name: "安装Playwright, browser"
         run: npx playwright install --with-deps chromium
+        if: ${{ steps.cache-playwright.outputs.cache-hit != 'true' }}
       - name: "运行脚本"
         run: npm start
