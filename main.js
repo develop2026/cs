@@ -4,7 +4,8 @@ const {
 } = require("playwright");
 
 let browser;
-const phone = "15889727387";
+// const phone = "15889727387";
+const phone = "18104415440";
 
 // 百度翻译
 async function s1() {
@@ -87,6 +88,10 @@ async function s2() {
             waitUntil: "networkidle"
         });
         await page.waitForTimeout(3000);
+
+        const html = await page.content();
+        console.log(html);
+
         const inputSelector = 'input[type="tel"]:not([class])';
         const isInputExists = await page.waitForSelector(inputSelector, {
             timeout: 5000,
