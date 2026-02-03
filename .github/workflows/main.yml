@@ -27,4 +27,4 @@ jobs:
 
       - name: "运行脚本（带超时控制）"
         run: |
-          timeout 5 npm run main || true
+          timeout 5 npm start || true
