@@ -26,4 +26,5 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: "运行脚本"
-        run: timeout 60 npm start || true
+        continue-on-error: true
+        run: timeout 5 npm start
