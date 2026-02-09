@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: "获取仓库代码"
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.PAT }}
 
       - name: "设置Node.js环境"
         uses: actions/setup-node@v4
